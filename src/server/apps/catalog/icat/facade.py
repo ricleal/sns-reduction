@@ -251,5 +251,12 @@ class Catalog(object):
             logger.error("ICAT did not return the expected result. Are the instrument and experiment id valids?")
             return None
 
-        json_data_subset = {"data" : [ [entry['@id'],entry['title']] for entry in json_data] }
+        data_list = list()
+        for entry in json_data:
+            title = None
+            if 'title' in entry:
+                title = entry['title']
+            data_list.append([entry['@id'],title])
+
+        json_data_subset = {"data" : data_list }
         return json_data_subset;
